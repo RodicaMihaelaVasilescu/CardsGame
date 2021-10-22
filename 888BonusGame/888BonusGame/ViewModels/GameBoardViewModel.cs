@@ -91,7 +91,7 @@ namespace _888BonusGame.ViewModels
       var cardsOf8 = 0;
       foreach (var item in CardsList)
       {
-        if (item.Value.Contains("8")|| item.Value.Contains("9")|| item.Value.Contains("8"))
+        if (item.Value.Contains("8"))
         {
           cardsOf8++;
         }
