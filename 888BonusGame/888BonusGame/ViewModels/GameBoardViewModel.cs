@@ -6,23 +6,24 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
 using _888BonusGame.Services;
-using Card = _888BonusGame.Model.Card;
 
 namespace _888BonusGame.ViewModels
 {
   public class GameBoardViewModel : INotifyPropertyChanged
   {
+    #region Private Members
+    private int _score;
+    private int _occurrencesOf8s;
     private HttpClient client = new HttpClient();
     private CardService _cardService;
-    private ObservableCollection<Card> _cardsList;
-    private int _score;
-    private int _occurenciesOf8s;
+    private ObservableCollection<CardViewModel> _cardsList;
+    #endregion
 
+    #region Public Members
     public event PropertyChangedEventHandler PropertyChanged;
 
-    public ObservableCollection<Card> CardsList
+    public ObservableCollection<CardViewModel> CardsList
     {
       get
       {
@@ -48,50 +49,59 @@ namespace _888BonusGame.ViewModels
       }
     }
 
-    public int OccurenciesOf8s
+    public int OccurrencesOf8s
     {
       get
       {
-        return _occurenciesOf8s;
+        return _occurrencesOf8s;
       }
       set
       {
-        _occurenciesOf8s = value;
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OccurenciesOf8s"));
+        _occurrencesOf8s = value;
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OccurrencesOf8s"));
       }
     }
+    #endregion
 
+    #region Constructor
 
     public GameBoardViewModel()
     {
       _cardService = new CardService(client);
       _cardService.ShuffledCards += ShuffleCards;
       Task loadCommand = LoadCommandExecute();
-
     }
 
+    #endregion
+
+    #region Private Methods
     private void ShuffleCards(List<DataAccess.Model.Card> cards)
     {
-      OccurenciesOf8s = 0;
+      ResetOccurrenciesNumber();
       CardsList = InitializeCardsList(cards);
+    }
+
+    private void ResetOccurrenciesNumber()
+    {
+      OccurrencesOf8s = 0;
     }
 
     private void CheckOccurencies()
     {
-      OccurenciesOf8s = GetOccurenciesNumber(CardsList);
-      if (OccurenciesOf8s > 1)
+      OccurrencesOf8s = GetOccurrencesNumberOf8(CardsList);
+      if (OccurrencesOf8s > 1)
       {
         Score += 8;
       }
 
     }
 
-    private int GetOccurenciesNumber(ObservableCollection<Card> cardsList)
+    private int GetOccurrencesNumberOf8(ObservableCollection<CardViewModel> cardsList)
     {
       var cardsOf8 = 0;
       foreach (var item in CardsList)
       {
-        if (item.Value.Contains("8"))
+        if (item.Card.Value.Contains("8"))
         {
           cardsOf8++;
         }
@@ -110,24 +120,25 @@ namespace _888BonusGame.ViewModels
       CardsList = InitializeCardsList(allItems);
     }
 
-    private ObservableCollection<Card> InitializeCardsList(List<DataAccess.Model.Card> allItems)
+    private ObservableCollection<CardViewModel> InitializeCardsList(List<DataAccess.Model.Card> allItems)
     {
-      var cardsList = new ObservableCollection<Card>();
+      var cardsList = new ObservableCollection<CardViewModel>();
       foreach (var item in allItems)
       {
-        var card = new Card(item);
-        cardsList.Add(card);
-        card.Flipped += CardFlipped;
+        var cardViewModel = new CardViewModel(item);
+        cardsList.Add(cardViewModel);
+        cardViewModel.Flipped += CardFlipped;
       }
       return cardsList;
     }
 
     private void CardFlipped(object sender, EventArgs e)
     {
-      if (CardsList.Count(c => c.HasBeenFlipped == true) == CardsList.Count())
+      if (CardsList.Count(c => c.Card.HasBeenFlipped == true) == CardsList.Count())
       {
         CheckOccurencies();
       }
     }
+    #endregion
   }
 }

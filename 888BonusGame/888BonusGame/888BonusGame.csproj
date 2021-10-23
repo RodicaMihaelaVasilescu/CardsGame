@@ -93,6 +93,7 @@
     <Compile Include="Services\CardService.cs" />
     <Compile Include="Utility\CardEventArgs.cs" />
     <Compile Include="Utility\TypeUtilities.cs" />
+    <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\GameBoardViewModel.cs" />
     <Compile Include="Views\GameBoardControl.xaml.cs">
       <DependentUpon>GameBoardControl.xaml</DependentUpon>
@@ -146,7 +147,7 @@
       <Project>{2047042c-9826-470a-a620-3d55303c70e6}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebApplication\WebAPI.csproj">
+    <ProjectReference Include="..\WebAPI\WebAPI.csproj">
       <Project>{a0003bf4-ee93-4ad3-b32c-6ba5c70899e7}</Project>
       <Name>WebAPI</Name>
     </ProjectReference>

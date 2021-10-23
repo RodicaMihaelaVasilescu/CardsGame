@@ -18,33 +18,6 @@
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
       </ResourceDictionary.MergedDictionaries>-->
 
-      <!--<Style x:Key="FlipCardButton" TargetType="Button">
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Margin" Value="5" />
-        <Setter Property="Template">
-          <Setter.Value>
-            <ControlTemplate TargetType="Button">
-              <Border
-                Name="border"
-                Background="{TemplateBinding Background}"
-                BorderThickness="0">
-                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-              </Border>
-              <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                  <Setter TargetName="border" Property="Background">
-                    <Setter.Value>
-                      <ImageBrush ImageSource="Users/Rodica/source/repos/888BonusGame/888BonusGame/Resources/front_card.png" />
-                    </Setter.Value>
-                  </Setter>
-
-                </Trigger>
-              </ControlTemplate.Triggers>
-            </ControlTemplate>
-          </Setter.Value>
-        </Setter>
-      </Style>-->
-
       <Style x:Key="NoItemHighlight" TargetType="{x:Type ListViewItem}">
         <Setter Property="Template">
           <Setter.Value>
@@ -53,7 +26,6 @@
             </ControlTemplate>
           </Setter.Value>
         </Setter>
-        <!--<EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />-->
       </Style>
     </ResourceDictionary>
   </UserControl.Resources>
@@ -98,12 +70,12 @@
             <Image
               Width="70"
               Height="100"
-              Source="{Binding DisplayedImage}">
+              Source="{Binding Card.DisplayedImage}">
               <Image.Style>
                 <Style TargetType="{x:Type Image}">
                   <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                      <Setter Property="Source" Value="{Binding FrontImage}" />
+                      <Setter Property="Source" Value="{Binding Card.FrontImage}" />
                     </Trigger>
                   </Style.Triggers>
                 </Style>
@@ -127,10 +99,10 @@
       FontSize="25"
       Foreground="Pink"
       Opacity="0.7"
-      Visibility="{Binding OccurenciesOf8s, Converter={StaticResource IntToVisibilityConverter}}">
+      Visibility="{Binding OccurrencesOf8s, Converter={StaticResource IntToVisibilityConverter}}">
       <TextBlock.Text>
-        <MultiBinding StringFormat="{} Congrats, you've won 8$!&#x0a;{0} occurencies of 8s">
-          <Binding Path="OccurenciesOf8s" />
+        <MultiBinding StringFormat="{} Congrats, you've won 8$!&#x0a;{0} occurrences of 8s">
+          <Binding Path="OccurrencesOf8s" />
         </MultiBinding>
       </TextBlock.Text>
     </TextBlock>

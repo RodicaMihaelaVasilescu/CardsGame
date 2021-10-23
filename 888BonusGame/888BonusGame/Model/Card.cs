@@ -38,31 +38,7 @@ namespace _888BonusGame.Model
 
     public string BackImage => @"pack://application:,,,/Resources/Cards/red_back.png";
 
-    public ICommand FlipCommand { get; set; }
-    public event EventHandler Flipped;
-
-    public Card(DataAccess.Model.Card obj)
-    {
-      Id = obj.Id;
-      Value = obj.Value;
-      DisplayedImage = BackImage;
-      FlipCommand = new DelegateCommand(FlipCommandExecute);
-    }
 
     public event PropertyChangedEventHandler PropertyChanged;
-
-    private void FlipCommandExecute()
-    {
-      if (DisplayedImage == BackImage)
-      {
-        DisplayedImage = FrontImage;
-        HasBeenFlipped = true;
-        Flipped?.Invoke(this, new EventArgs());
-      }
-      else
-      {
-        DisplayedImage = BackImage;
-      }
-    }
   }
 }
